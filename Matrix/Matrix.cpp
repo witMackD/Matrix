@@ -3,19 +3,32 @@
 
 #include "pch.h"
 #include <iostream>
+using namespace std;
+
+
+class Matrix {
+public:
+	Matrix(int rs, int cs);
+	const double &operator () (int r, int c) const;
+private:
+	int rs, cs;
+	double *d;
+};
+
+Matrix::Matrix(int rs, int cs) : rs(rs), cs(cs), d(new double[rs * cs]) {
+std:cout << "Matrix(int, int)" << std::endl;
+}
+
+double &Matrix::operator () (int r, int c) {
+	return d[r*cs+c];
+}
+
+
 
 int main()
 {
+	Matrix m1(2, 3);
+	m1(1, 2) = 7;
+	std::cout << m1(1, 2);
     std::cout << "Hello World!\n"; 
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
