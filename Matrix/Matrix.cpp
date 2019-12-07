@@ -5,10 +5,11 @@
 #include <iostream>
 using namespace std;
 
-
 class Matrix {
 public:
 	Matrix(int rs, int cs);
+	~Matrix();
+	double &operator()(int r, int c);
 	const double &operator () (int r, int c) const;
 private:
 	int rs, cs;
@@ -19,16 +20,24 @@ Matrix::Matrix(int rs, int cs) : rs(rs), cs(cs), d(new double[rs * cs]) {
 std:cout << "Matrix(int, int)" << std::endl;
 }
 
-double &Matrix::operator () (int r, int c) {
-	return d[r*cs+c];
+Matrix::~Matrix() {
+std:cout << "DESTROY" << std::endl;
+	delete[] d;
+	d = nullptr;
 }
 
+double &Matrix::operator () (int r, int c) {
+	return d[r*cs + c];
+}
 
+const double &Matrix::operator () (int r, int c) const {
+	return d[r*cs + c];
+}
 
 int main()
 {
 	Matrix m1(2, 3);
 	m1(1, 2) = 7;
-	std::cout << m1(1, 2);
-    std::cout << "Hello World!\n"; 
+	m1.~Matrix();
+	std::cout << m1(1, 2) << std::endl;
 }
